@@ -1,26 +1,42 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class RemoteDataScreen extends StatelessWidget {
+import '../models/character.dart';
 
-  static const routeName = '/';
+class RemoteDataScreen extends StatefulWidget {
+
+  static final url = Uri.parse('https://swapi.dev/api/people/1');
+
+  const RemoteDataScreen({Key? key}) : super(key: key);
+
+  @override
+  _RemoteDataScreenState createState() => _RemoteDataScreenState();
+}
+
+class _RemoteDataScreenState extends State<RemoteDataScreen> {
+  Character? character;
+
+  @override
+  void initState() {
+    super.initState();
+    retrieveCharacter();
+  }
+
+  Future<void> retrieveCharacter() async {
+    final http.Response apiResponse = await http.get(RemoteDataScreen.url);
+    print(apiResponse.body);
+    character = Character.fromJSON(jsonDecode(apiResponse.body));
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text('Latitude: LATITUDE', style: Theme.of(context).textTheme.headline5),
-          Text('Longitude: LONGITUDE', style: Theme.of(context).textTheme.headline5),
-          ElevatedButton(
-              onPressed: () {
-
-              },
-              child: Text('Share')
-          )
-        ],
-      ),
-    );
+    if(character == null) {
+      return Center(child: CircularProgressIndicator());
+    } else {
+      return Center(child: Text(character!.name));
+    }
   }
 }
