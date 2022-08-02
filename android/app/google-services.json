@@ -29,6 +29,13 @@
             {
               "client_id": "462499751146-b01m074a0eitqvaq84l6ou4b0sfenhl0.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "462499751146-mlcuoc6u1e4skdvstupaq6osagg3ekd0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "edu.oregonstate.millzane.wastegram"
+              }
             }
           ]
         }

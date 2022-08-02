@@ -13,7 +13,7 @@ class _EntryListsState extends State<EntryLists> {
       appBar: AppBar(title: Text('Wastegram')),
       body: StreamBuilder(
           stream:
-          FirebaseFirestore.instance.collection('bandnames').snapshots(),
+          FirebaseFirestore.instance.collection('posts').snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasData &&

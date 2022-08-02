@@ -14,20 +14,8 @@ class CameraScreen extends StatefulWidget {
 class _CameraScreenState extends State<CameraScreen> {
 
   File? image;
-  final picker = ImagePicker();
-
-  Future getImage() async {
-    // TODO Add logic to handle user not allowing permission to access photos
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    image = File(pickedFile!.path);
-
-    var fileName = '${DateTime.now()}.jpg';
-    Reference storageReference = FirebaseStorage.instance.ref().child(fileName);
-    UploadTask uploadTask = storageReference.putFile(image!);
-    await uploadTask;
-    final url = await storageReference.getDownloadURL();
-    return url;
-  }
+  final picker_gallery = ImagePicker();
+  final picker_camera = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
@@ -46,40 +34,98 @@ class _CameraScreenState extends State<CameraScreen> {
                       var post = snapshot.data!.docs[index];
                       return ListTile(
                           leading: Text(post['weight'].toString()),
-                          title: Text(post['title']));
+                          title: Text(post['title']),
+                          trailing: Image.network(post['url']));
                     },
                   ),
                 ),
                 ElevatedButton(
                   child: Text('Select photo and upload data'),
                   onPressed: () {
-                    uploadData();
+                    String source;
+                    uploadData(source = 'get');
                   },
                 ),
+                ElevatedButton(
+                  child: const Text('Take photo and upload data'),
+                  onPressed: () {
+                    String source;
+                    uploadData(source = 'take');
+                  },
+                ),
+                const SizedBox(height: 20,)
               ],
             );
           } else {
             return Column(
               children: [
-                Center(child: CircularProgressIndicator()),
+                const Center(child: CircularProgressIndicator()),
                 ElevatedButton(
-                  child: Text('Select photo and upload data'),
+                  child: const Text('Select photo and upload data'),
                   onPressed: () {
-                    uploadData();
+                    String source;
+                    uploadData(source = 'get');
                   },
                 ),
+                ElevatedButton(
+                  child: const Text('Take photo and upload data'),
+                  onPressed: () {
+                    String source;
+                    uploadData(source = 'take');
+                  },
+                ),
+                const SizedBox(height: 20,)
               ],
             );
           }
         });
   }
 
-  void uploadData() async {
-    final url = await getImage();
-    final weight = DateTime.now().millisecondsSinceEpoch % 1000;
-    final title = 'Title $weight';
-    FirebaseFirestore.instance
-        .collection('posts')
-        .add({'weight': weight, 'title': title, 'url': url});
+
+  // TODO handle live photos
+  Future getImage() async {
+    // TODO Add logic to handle user not allowing permission to access photos
+    final pickedFile = await picker_gallery.pickImage(source: ImageSource.gallery);
+    image = File(pickedFile!.path);
+
+    var fileName = '${DateTime.now()}.jpg';
+    Reference storageReference = FirebaseStorage.instance.ref().child(fileName);
+    UploadTask uploadTask = storageReference.putFile(image!);
+    await uploadTask;
+    final url = await storageReference.getDownloadURL();
+    return url;
+  }
+
+
+  Future takeImage() async {
+    // TODO Add logic to handle user not allowing permission to access photos
+    final pickedFile = await picker_camera.pickImage(source: ImageSource.camera);
+    image = File(pickedFile!.path);
+
+    var fileName = '${DateTime.now()}.jpg';
+    Reference storageReference = FirebaseStorage.instance.ref().child(fileName);
+    UploadTask uploadTask = storageReference.putFile(image!);
+    await uploadTask;
+    final url = await storageReference.getDownloadURL();
+    return url;
+  }
+
+
+  void uploadData(source) async {
+    if(source == 'get') {
+      final url = await getImage();
+      final weight = DateTime.now().millisecondsSinceEpoch % 1000;
+      final title = 'Title $weight';
+      FirebaseFirestore.instance
+          .collection('posts')
+          .add({'weight': weight, 'title': title, 'url': url});
+    } else {
+      final url = await takeImage();
+      final weight = DateTime.now().millisecondsSinceEpoch % 1000;
+      final title = 'Title $weight';
+      FirebaseFirestore.instance
+          .collection('posts')
+          .add({'weight': weight, 'title': title, 'url': url});
+    }
   }
 }

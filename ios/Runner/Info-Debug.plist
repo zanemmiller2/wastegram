@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationAlwaysUsageDescription</key>
-     	<string>Needed to access location</string>
-    	<key>NSLocationWhenInUseUsageDescription</key>
-    	<string>Needed to access location</string>
-    	<key>NSPhotoLibraryUsageDescription</key>
-    	<string>Needed to access photo library</string>
-    	<key>NSCameraUsageDescription</key>
-    	<string>Needed to access camera</string>
-    	<key>NSMicrophoneUsageDescription</key>
-    	<string>Needed to access microphone</string>
+    <string>Needed to access location</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Needed to access location</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Needed to access photo library</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Needed to access camera</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Needed to access microphone</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
