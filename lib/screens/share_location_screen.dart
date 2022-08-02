@@ -62,29 +62,31 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
     if (locationData == null) {
       return Center(child: RedCircularProgressIndicator());
     } else {
-      return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text('Latitude: ${locationData!.latitude}',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .headlineSmall),
-              Text('Longitude:  ${locationData!.longitude}',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .headlineSmall),
-              ElevatedButton(
-                child: Text('Share'),
-                onPressed: () {
-                  Share.share('Hey! Meet me at ${locationData!.latitude}, ${locationData!.longitude}');
-                },
-              )
-            ],
-          ));
+      return Scaffold(
+        body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('Latitude: ${locationData!.latitude}',
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headlineSmall),
+                Text('Longitude:  ${locationData!.longitude}',
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headlineSmall),
+                ElevatedButton(
+                  child: Text('Share'),
+                  onPressed: () {
+                    Share.share('Hey! Meet me at ${locationData!.latitude}, ${locationData!.longitude}');
+                  },
+                )
+              ],
+            )),
+      );
     }
   }
 }
