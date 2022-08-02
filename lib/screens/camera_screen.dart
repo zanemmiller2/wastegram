@@ -39,39 +39,40 @@ class _CameraScreenState extends State<CameraScreen> {
                     },
                   ),
                 ),
-                ElevatedButton(
-                  child: Text('Select photo and upload data'),
-                  onPressed: () {
-                    String source;
-                    uploadData(source = 'get');
-                  },
-                ),
-                ElevatedButton(
-                  child: const Text('Take photo and upload data'),
-                  onPressed: () {
-                    String source;
-                    uploadData(source = 'take');
-                  },
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      child: const Icon(Icons.add_photo_alternate_outlined),
+                      onPressed: () {
+                        uploadData('get');
+                      },
+                    ),
+                    ElevatedButton(
+                      child: const Icon(Icons.add_a_photo_outlined),
+                      onPressed: () {
+                        uploadData('take');
+                      },
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 20,)
               ],
             );
-          } else {
+          } else { // Database is empty
             return Column(
               children: [
                 const Center(child: CircularProgressIndicator()),
                 ElevatedButton(
                   child: const Text('Select photo and upload data'),
                   onPressed: () {
-                    String source;
-                    uploadData(source = 'get');
+                    uploadData('get');
                   },
                 ),
                 ElevatedButton(
                   child: const Text('Take photo and upload data'),
                   onPressed: () {
-                    String source;
-                    uploadData(source = 'take');
+                    uploadData('take');
                   },
                 ),
                 const SizedBox(height: 20,)
@@ -83,9 +84,17 @@ class _CameraScreenState extends State<CameraScreen> {
 
 
   // TODO handle live photos
-  Future getImage() async {
+  Future getImage(sourceType) async {
     // TODO Add logic to handle user not allowing permission to access photos
-    final pickedFile = await picker_gallery.pickImage(source: ImageSource.gallery);
+    ImageSource source;
+
+    if(sourceType == 'gallery'){
+      source = ImageSource.gallery;
+    } else{
+      source = ImageSource.camera;
+    }
+
+    final pickedFile = await picker_gallery.pickImage(source: source);
     image = File(pickedFile!.path);
 
     var fileName = '${DateTime.now()}.jpg';
@@ -95,37 +104,22 @@ class _CameraScreenState extends State<CameraScreen> {
     final url = await storageReference.getDownloadURL();
     return url;
   }
-
-
-  Future takeImage() async {
-    // TODO Add logic to handle user not allowing permission to access photos
-    final pickedFile = await picker_camera.pickImage(source: ImageSource.camera);
-    image = File(pickedFile!.path);
-
-    var fileName = '${DateTime.now()}.jpg';
-    Reference storageReference = FirebaseStorage.instance.ref().child(fileName);
-    UploadTask uploadTask = storageReference.putFile(image!);
-    await uploadTask;
-    final url = await storageReference.getDownloadURL();
-    return url;
-  }
-
 
   void uploadData(source) async {
+    final weight = DateTime.now().millisecondsSinceEpoch % 1000;
+    final title = 'Title $weight';
+
     if(source == 'get') {
-      final url = await getImage();
-      final weight = DateTime.now().millisecondsSinceEpoch % 1000;
-      final title = 'Title $weight';
-      FirebaseFirestore.instance
-          .collection('posts')
-          .add({'weight': weight, 'title': title, 'url': url});
+      addToCollection(weight, title, await getImage('gallery'));
     } else {
-      final url = await takeImage();
-      final weight = DateTime.now().millisecondsSinceEpoch % 1000;
-      final title = 'Title $weight';
-      FirebaseFirestore.instance
-          .collection('posts')
-          .add({'weight': weight, 'title': title, 'url': url});
+      addToCollection(weight, title, await getImage('camera'));
     }
+  }
+
+  void addToCollection(weight, title, url) {
+    FirebaseFirestore.instance
+        .collection('posts')
+        .add({'weight': weight, 'title': title, 'url': url});
+
   }
 }
