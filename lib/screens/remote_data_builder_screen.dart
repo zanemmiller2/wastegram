@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../components/red_circular_progress_indicator.dart';
 import '../models/character.dart';
 
 class RemoteDataBuilderScreen extends StatefulWidget {
+
   static final url = Uri.parse('https://swapi.dev/api/people/3');
 
   @override
@@ -13,6 +15,8 @@ class RemoteDataBuilderScreen extends StatefulWidget {
 }
 
 class _RemoteDataScreenState extends State<RemoteDataBuilderScreen> {
+
+  // TODO check status code and handle different status codes
   Future<http.Response> apiResponse = http.get(RemoteDataBuilderScreen.url);
 
   @override
@@ -23,9 +27,18 @@ class _RemoteDataScreenState extends State<RemoteDataBuilderScreen> {
           Widget child;
           if(snapshot.hasData) {
             Character character = Character.fromJSON(jsonDecode(snapshot.data!.body));
-            child = Text(character.name);
+            child = Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(character.name, style: Theme.of(context).textTheme.headlineSmall,),
+                    Text(character.gender.toUpperCase()),
+                    Text(character.height.toString()),
+                  ],
+                ));
           } else {
-            child = const CircularProgressIndicator();
+            child = RedCircularProgressIndicator();
           }
           return Center(child: child);
         }

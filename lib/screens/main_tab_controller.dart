@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wastegram/screens/remote_data_builder_screen.dart';
 import 'package:wastegram/screens/remote_data_screen.dart';
 import 'package:wastegram/screens/share_location_screen.dart';
 
@@ -15,7 +16,7 @@ class MainTabController extends StatelessWidget {
 
   final screens = [
     ShareLocationScreen(),
-    RemoteDataScreen(),
+    RemoteDataBuilderScreen(),
     CameraScreen()
   ];
 

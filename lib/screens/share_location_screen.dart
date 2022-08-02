@@ -3,6 +3,8 @@ import 'package:location/location.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../components/red_circular_progress_indicator.dart';
+
 class ShareLocationScreen extends StatefulWidget {
 
   static const routeName = "/";
@@ -58,7 +60,7 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
   @override
   Widget build(BuildContext context) {
     if (locationData == null) {
-      return const Center(child: CircularProgressIndicator());
+      return Center(child: RedCircularProgressIndicator());
     } else {
       return Center(
           child: Column(
