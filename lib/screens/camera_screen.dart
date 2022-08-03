@@ -23,8 +23,7 @@ class _CameraScreenState extends State<CameraScreen> {
         stream: FirebaseFirestore.instance.collection('posts').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData &&
-              snapshot.data!.docs != null &&
-              snapshot.data!.docs.length > 0) {
+              snapshot.data!.docs.isNotEmpty) {
             return Column(
               children: [
                 Expanded(
