@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../components/red_circular_progress_indicator.dart';
-import '../models/character.dart';
+import '../models/food_waste_post.dart';
 
 class RemoteDataScreen extends StatefulWidget {
 
@@ -17,7 +17,7 @@ class RemoteDataScreen extends StatefulWidget {
 }
 
 class _RemoteDataScreenState extends State<RemoteDataScreen> {
-  Character? character;
+  FoodWastePost? foodWastePost;
 
   @override
   void initState() {
@@ -28,7 +28,7 @@ class _RemoteDataScreenState extends State<RemoteDataScreen> {
   Future<void> retrieveCharacterData() async {
     final http.Response apiResponse = await http.get(RemoteDataScreen.url);
     print(apiResponse.body);
-    character = Character.fromJSON(
+    foodWastePost = FoodWastePost.fromMap(
         jsonDecode(apiResponse.body)
     );
     setState(() {});
@@ -36,7 +36,7 @@ class _RemoteDataScreenState extends State<RemoteDataScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if(character == null) {
+    if(foodWastePost == null) {
       return Center(child: RedCircularProgressIndicator());
     } else {
       return Center(
@@ -44,9 +44,10 @@ class _RemoteDataScreenState extends State<RemoteDataScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(character!.name, style: Theme.of(context).textTheme.headlineSmall,),
-              Text(character!.gender.toUpperCase()),
-              Text(character!.height.toString()),
+              Text(foodWastePost!.date.toString(), style: Theme.of(context).textTheme.headlineSmall,),
+              Text('${foodWastePost!.quantity}'),
+              Text('${foodWastePost!.longitude}'),
+              Text('${foodWastePost!.latitude}'),
             ],
         ));
       }

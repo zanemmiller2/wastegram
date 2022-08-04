@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:wastegram/screens/main_tab_controller.dart';
+import 'package:wastegram/components/main_tab_controller.dart';
 import 'package:wastegram/screens/share_location_screen.dart';
 
 class App extends StatefulWidget {

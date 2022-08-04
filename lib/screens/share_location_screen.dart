@@ -62,18 +62,20 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
     if (locationData == null) {
       return Center(child: RedCircularProgressIndicator());
     } else {
+      double? latitude = locationData?.latitude;
+      double? longitude = locationData?.longitude;
       return Scaffold(
         body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('Latitude: ${locationData!.latitude}',
+                Text('Latitude: $latitude',
                     style: Theme
                         .of(context)
                         .textTheme
                         .headlineSmall),
-                Text('Longitude:  ${locationData!.longitude}',
+                Text('Longitude:  $longitude',
                     style: Theme
                         .of(context)
                         .textTheme
