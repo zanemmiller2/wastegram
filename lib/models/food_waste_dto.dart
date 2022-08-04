@@ -1,8 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:location/location.dart';
-
 import 'date_formatter.dart';
 
+// DTO for storing the data before uploading to Firebase
 class WastedFoodDTO {
 
   LocationData? locationData;

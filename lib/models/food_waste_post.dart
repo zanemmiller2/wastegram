@@ -1,5 +1,4 @@
-
-
+// DTO for storing the details from Firebase storage
 class FoodWastePost {
   final String date;
   final String photoURL;

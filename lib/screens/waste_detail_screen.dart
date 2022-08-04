@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wastegram/models/food_waste_post.dart';
 
+// Single page post view with full detail
 class WasteDetailScreen extends StatelessWidget {
   final FoodWastePost post;
 

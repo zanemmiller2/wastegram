@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:wastegram/components/main_tab_controller.dart';
 import 'package:wastegram/models/food_waste_dto.dart';
 import 'package:wastegram/screens/waste_list_screen.dart';
 

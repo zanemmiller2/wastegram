@@ -5,10 +5,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wastegram/models/food_waste_post.dart';
-import 'package:wastegram/screens/waste_detail_screen.dart';
 import '../components/camera_fab.dart';
 import '../models/date_formatter.dart';
 
+
+// List view screen of all posts with date and counter
 class WasteListScreen extends StatefulWidget {
 
   @override
@@ -43,6 +44,7 @@ class WasteListScreenState extends State<WasteListScreen> {
                             title: Text('${post.quantity}'),
                             trailing: Image.network(post.photoURL),
                             onTap: () {
+                              throw StateError('Example Error!');
                             },
                         );
                       },

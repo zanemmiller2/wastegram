@@ -1,7 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:wastegram/models/date_formatter.dart';
 
 import '../components/red_circular_progress_indicator.dart';
 import '../models/food_waste_post.dart';
