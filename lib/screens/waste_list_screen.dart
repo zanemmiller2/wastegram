@@ -40,7 +40,7 @@ class WasteListScreenState extends State<WasteListScreen> {
                         var post = FoodWastePost.fromMap(snapshot.data!.docs[index].data());
                         return ListTile(
                             leading: Text(post.date),
-                            title: Text('${post.latitude}'),
+                            title: Text('${post.quantity}'),
                             trailing: Image.network(post.photoURL),
                             onTap: () {
                             },

@@ -54,7 +54,9 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
     }
 
     locationData = await locationService.getLocation();
-    setState(() {});
+    if (mounted) {
+      setState (() {});
+    }
   }
 
   @override

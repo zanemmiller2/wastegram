@@ -1,7 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
+import 'package:wastegram/components/main_tab_controller.dart';
 import 'package:wastegram/models/food_waste_dto.dart';
 import 'package:wastegram/screens/waste_list_screen.dart';
+
+import '../models/translations.dart';
 
 class WastedFoodForm extends StatefulWidget {
 
@@ -55,7 +58,10 @@ class _WastedFoodFormState extends State<WastedFoodForm> {
       child: TextFormField(
         textAlign: TextAlign.center,
         keyboardType: TextInputType.number,
-        decoration: const InputDecoration(hintText: 'Number of wasted items'),
+        decoration: InputDecoration(
+            hintText: Translations(
+                locale: Localizations.localeOf(context)
+            ).quantityFieldHint),
         style: Theme.of(context).textTheme.displaySmall,
         validator: validateItemQuantity,
         onSaved: saveItemQuantity,
@@ -90,10 +96,7 @@ class _WastedFoodFormState extends State<WastedFoodForm> {
                 wastedFoodEntryValue.latitude,
                 wastedFoodEntryValue.longitude);
 
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (BuildContext context) {
-                  return WasteListScreen();
-                }));
+            Navigator.of(context).pop();
           }
         },
         child: const Text('Save Entry'));
@@ -108,6 +111,5 @@ class _WastedFoodFormState extends State<WastedFoodForm> {
         child: const Text('Cancel'));
   }
 
-
-
 }
+
