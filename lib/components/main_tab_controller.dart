@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wastegram/screens/new_waste_screen.dart';
 import 'package:wastegram/screens/share_location_screen.dart';
 
 import '../screens/waste_list_screen.dart';
